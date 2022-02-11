@@ -21,14 +21,10 @@ class Steam(commands.Cog,
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name='steamdebug', hidden=True)
-    @commands.is_owner()
-    async def steam_debug(self, ctx, *, shit: str):
-        pass
-
     @commands.command(name='steamuser')
     async def get_steam_users(self, ctx, user_id:str):
         await ctx.channel.trigger_typing()
+        # Check if user profile exists
         steamID = SteamID.from_url("http://steamcommunity.com/id/{}".format(user_id))
         if steamID is None:
             steamID = user_id
@@ -45,6 +41,8 @@ class Steam(commands.Cog,
         # if vacBanned:
         #     ban_info['Vac Ban'] = ban['NumberOfVacBans']
         #     ban_info['Days Since Last VAC Ban'] = ban['DaysSinceLastBan']
+
+        # Check if user's profile is private
         if steam_user['communityvisibilitystate'] != 3:
             embed = discord.Embed(title=steam_user['personaname'], description="This profile is private.", color=0xFF0000, url=steam_user['profileurl'])
             embed.set_thumbnail(url=steam_user['avatarfull'])
@@ -54,24 +52,29 @@ class Steam(commands.Cog,
         # Get list of games the steam user has played
         games = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={}&steamid={}".format(token, steamID)).json()["response"]
         played_games = games['game_count']
-
+        # Get the count of user's friends
         friend_list = requests.get("http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key={}&steamid={}&relationship=friend".format(token, steamID)).json()["friendslist"]
         friends = friend_list['friends']
         friend_count = len(friends)
-
+        # Get the user's current status
         status = {0:'Offline', 1:'Online', 2:'Busy', 3:'Away', 4:'Snooze', 5:'Looking to trade', 6:'Looking to play'}
         colors = {0:0xFF0000, 1:0x00FF00, 2:0xFFd200, 3:0x00ebff, 4:0x808080, 5: 0xae62ff, 6: 0x9922ff}
+        # Put information into an Embed to send to chat
         embed = discord.Embed()
         # embed = make_list_embed(ban_info)
-        embed.title = '{}'.format(steam_user['personaname'])
-        #embed.add_field(name=status[steam_user['personastate']], value="***{}***".format(status[steam_user['personastate']]), inline=False)
-        
+        embed.title = '{}'.format(steam_user['personaname'])        
         embed.description = '***{}***'.format(status[steam_user['personastate']])
         embed.color = colors[steam_user['personastate']]
         embed.url = steam_user['profileurl']
         embed.set_thumbnail(url=steam_user['avatarfull'])
         embed.add_field(name="Games", value=played_games, inline=False)
         embed.add_field(name="Friends", value=friend_count, inline=True)
+
+        # Print steam information to console
+        print("\n=====================")
+        print("Steam user: {}\nStatus: {}\nGames: {}\nFriends: {}".format(steam_user['personaname'], status[steam_user['personastate']], played_games, friend_count))
+        print("=====================")
+        # Just send it bud
         await ctx.send(embed=embed)
 
 
