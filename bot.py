@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 from discord.ext import commands
 import aiohttp
 from database import DbModel
+from datetime import datetime
+import threading
 
 load_dotenv('secrets.env')
 API_TOKEN = os.getenv('DISCORD_TOKEN')
@@ -14,7 +16,8 @@ extensions = (
     "cogs.strawpoll",
     "cogs.owner",
     "cogs.rng",
-    "cogs.conversions"
+    "cogs.conversions",
+    "cogs.misc"
 )
 
 class CommanderBot(commands.AutoShardedBot):
@@ -36,6 +39,24 @@ class CommanderBot(commands.AutoShardedBot):
 
         for extension in extensions:
             self.load_extension(extension)
+
+    def check_time(self):
+        # Get an updated time every second
+        threading.Timer(1, self.check_time).start()
+
+        # Send petition updates every 3 hours between 6am and 9pm
+
+        now = datetime.now()
+        # Return the current Hour in 24 hour format
+        hour = now.strftime("%H")
+        # Return the current Minutes
+        minute = now.strftime("%M")
+        # Return the current Seconds
+        seconds = now.strftime("%S")
+        current_time = now.strftime("%H:%M:%S")
+        
+        return (hour, minute, seconds)
+
 
     async def on_ready(self):
         print('Logging in...\t\t', end='')
