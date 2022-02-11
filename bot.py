@@ -17,7 +17,8 @@ extensions = (
     "cogs.owner",
     "cogs.rng",
     "cogs.conversions",
-    "cogs.misc"
+    "cogs.misc",
+    "cogs.steam"
 )
 
 class CommanderBot(commands.AutoShardedBot):
@@ -44,7 +45,10 @@ class CommanderBot(commands.AutoShardedBot):
         # Get an updated time every second
         threading.Timer(1, self.check_time).start()
 
+
         # Send petition updates every 3 hours between 6am and 9pm
+        # Also send a petition update at like 3am to piss everyone off.
+
 
         now = datetime.now()
         # Return the current Hour in 24 hour format
