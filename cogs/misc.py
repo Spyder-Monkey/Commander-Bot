@@ -16,9 +16,7 @@ class Misc(commands.Cog):
 
     def check_time(self):
         threading.Timer(1, self.check_time).start()
-
         now = datetime.now()
-
         print(now)
 
         current_time = now.strftime("%H:%M:%S")
@@ -34,12 +32,18 @@ class Misc(commands.Cog):
         URL = "https://www.change.org/p/bring-back-cyber-cafe"
 
         await ctx.send("Let me check the petition right quick one guy...")
-        test = self.check_time()
+        #test = self.check_time()
+        # Make it appear as if the bot is typing
         async with ctx.typing():
-
+            # Set options for the firefox browser and make it so it does not appear
             firefox_options = Options()
             firefox_options.add_argument("--headless")
 
+            # Open Firefox using geckodriver
+            # Gets URL of petition and waits until the page has loaded.
+            # 
+            # Bot then sleeps for another 10 seconds because change.org decided that 
+            # they needed to have the signature number trickle and make my life harder
             with Firefox(options=firefox_options, executable_path=r'C:\\WebDrivers\\bin\\geckodriver') as browser:
                 browser.get(URL)
                 WebDriverWait(browser, 20).until(EC.presence_of_all_elements_located((By.TAG_NAME, 'html')))
