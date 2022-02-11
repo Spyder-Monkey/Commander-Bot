@@ -32,7 +32,7 @@ class CommanderBot(commands.AutoShardedBot):
         self.config = config
         self.shard_count = self.config["shards"]["count"]
         shard_ids_list = []
-        shard_ids = []
+        # shard_ids = []
 
         for i in range(self.config["shards"]["first_shard_id"], self.config["shards"]["last_shard_id"]+1):
             shard_ids_list.append(i)

@@ -75,7 +75,6 @@ class Poll(commands.Cog):
                             description=pollMessage, colour=0x83bae3)
                         pollMessage = await message.channel.send(embed=e)
 
-                        # CREATE POLL IN DATABASE HERE WITH CUSTOM OPTIONS
                         new_poll = DbModel.create_new_poll(pollMessage.id, title, message.author)
 
                         i=0

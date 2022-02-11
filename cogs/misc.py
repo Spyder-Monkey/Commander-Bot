@@ -14,6 +14,8 @@ class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+
+    # checks the time every second... probably gonna remove this from here though
     def check_time(self):
         threading.Timer(1, self.check_time).start()
         now = datetime.now()
@@ -51,12 +53,13 @@ class Misc(commands.Cog):
                 html = browser.page_source
 
         soup = BeautifulSoup(html, 'html.parser')
-
+        # Get the petition title from web page
         banner = soup.body.h1.text
+        # get the number of signatures from petition
         sign_count = soup.body.strong.span.text
-
+        # Create the embed to send info to channel
         embed = discord.Embed(title="**"+banner+"**", description=sign_count)
-
+        # JUST SEND IT BUD
         await ctx.send(embed=embed)
 
 
