@@ -21,7 +21,10 @@ class Steam(commands.Cog,
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name='steamuser')
+    @commands.command(
+        name='steamuser',
+        help="<community_id>"
+    )
     async def get_steam_users(self, ctx, user_id:str):
         await ctx.channel.trigger_typing()
         # Check if user profile exists

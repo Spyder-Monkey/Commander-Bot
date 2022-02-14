@@ -2,15 +2,16 @@ import discord
 from discord.ext import commands
 import random
 
-class RNG(commands.Cog):
+class RNG(commands.Cog,
+            description="Commands the utilize random number generation."):
     def __init__(self, bot):
         self.bot = bot
 
     # Roll Command Value
     @commands.command(
         name="roll",
-        help="$roll [value, ...]",
-        brief=": Return random item from list if more than one value is entered. Otherwise, returns a random number between 1 and [value]"
+        help="<value1> <value2> ...",
+        brief="Return random item from list if more than one value is entered. Otherwise, returns a random number between 1 and [value]"
     )
     async def roll(self, ctx, *value):
         # Choose random index from tuple is length greater than 1
@@ -26,7 +27,6 @@ class RNG(commands.Cog):
     # Coin Flip Command
     @commands.command(
         name="flip",
-        help="$flip",
         brief=": Flips a coin and returns Heads or Tails"
     )
     async def flip(self, ctx):
@@ -35,7 +35,7 @@ class RNG(commands.Cog):
     # 8ball Command
     @commands.command(
         name="8ball",
-        help="$8ball [question]",
+        help="<question>",
         brief=": Returns an answer from the magic 8 ball."
     )
     async def eight_ball(self, ctx, message):

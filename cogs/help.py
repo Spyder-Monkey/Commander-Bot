@@ -52,7 +52,7 @@ class Help(commands.Cog):
                 cogs_desc += f'**`{cog}`** {self.bot.cogs[cog].description}\n'
 
             # adding list of cogs to embed
-            embed.add_field(name='Modules', value=cogs_desc, inline=False)
+            embed.add_field(name='Modules', value=cogs_desc, inline=True)
 
             # iterating through uncategorized commands
             commands_desc = ''
@@ -81,7 +81,7 @@ class Help(commands.Cog):
                     for command in self.bot.get_cog(cog).get_commands():
                         # if cog is not hidden
                         if not command.hidden:
-                            embed.add_field(name=f'`{prefix}{command.name}`', value=command.help, inline=False)
+                            embed.add_field(name=f'`{prefix}{command.name} {command.help}`', value=command.brief, inline=False)
                     # found cog - break from loop
                     break
                 else:
@@ -95,7 +95,7 @@ class Help(commands.Cog):
         else:
             embed = discord.Embed(title="It's a magical place.",
                                     description="I don't know how you get here. But I didn't see this coming at all.\n"
-                                    "Would you please be so kind to report that issue to `{owner}`?\n"
+                                    "Would you please be so kind to report that issue to `{owner.nickname}`?\n"
                                     "I do appreciate it!",
                                     color=discord.Color.red())
         # sending reply embed using function defined above

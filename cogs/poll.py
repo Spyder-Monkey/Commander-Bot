@@ -4,7 +4,8 @@ from discord.ext.commands.cooldowns import BucketType
 from database import DbModel
 from emojis import EmojiList
 
-class Poll(commands.Cog):
+class Poll(commands.Cog,
+            description="Commands for creating a poll."):
     def __init__(self, bot):
         self.bot = bot
         self.emojiLetters = EmojiList.emojiLetters
@@ -32,7 +33,11 @@ class Poll(commands.Cog):
 
 
     @commands.cooldown(100,60,BucketType.user)
-    @commands.command(name="poll")
+    @commands.command(
+        name="poll",
+        help="{question} [Option1] [Option2] ...",
+        brief="Creates a poll."
+    )
     async def poll(self, ctx):
         message = ctx.message
         if not message.author.bot:

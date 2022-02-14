@@ -1,27 +1,14 @@
 import discord
 from discord.ext import commands
 
+class Conversions(commands.Cog,
+                    description="Commands for number conversions."):
 
-# Dec -> Bin
-# Dec -> Hex
-# Dec -> shits
-# Dec -> Octal
-
-# Bin -> Dec
-# Bin -> Hex
-# Bin -> Shits
-# Bin -> Octal
-
-# Hex -> Dec
-# Hex -> Bin
-# Hex -> Shits
-# Hex -> Octal
-
-
-
-class Conversions(commands.Cog):
-
-    @commands.command(name="convert")
+    @commands.command(
+        name="convert",
+        help="<number> <base>",
+        description="converts <number> to cooresponding <base>. Default base is Decimal"
+    )
     async def convert(self, ctx, number, base: str=None):
         #            Binary      Hex         Octal        Decimal
         prefixes = {'0b':False, '0x':False, '0o': False, '':True}
@@ -129,12 +116,12 @@ class Conversions(commands.Cog):
         return response
 
 
-
-
-
     """ SHIT CONVERSIONS """
     # Gigashart conversion
-    @commands.command(name="gigashart")
+    @commands.command(
+        name="gigashart",
+        help="testing"
+    )
     async def gigashart(self, ctx):
         # 1 bit = 69 shits
         # 420 shits = 1 shart

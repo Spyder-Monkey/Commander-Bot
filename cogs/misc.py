@@ -10,7 +10,8 @@ import time
 from datetime import datetime
 import threading
 
-class Misc(commands.Cog):
+class Misc(commands.Cog,
+            description="Miscellaneous commands."):
     def __init__(self, bot):
         self.bot = bot
 
