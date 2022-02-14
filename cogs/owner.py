@@ -26,7 +26,7 @@ class Owner(commands.Cog):
         name="unload", 
         brief="Unload command(s).",
         hidden=True
-        )
+    )
     @commands.is_owner()
     async def unload(self, ctx, * cog: str):
         print(cog)
@@ -58,7 +58,7 @@ class Owner(commands.Cog):
         name="shutdown", 
         brief="Log the bot out.",
         hidden=True
-        )
+    )
     @commands.is_owner()
     async def shutdown(self, ctx):
         await ctx.bot.logout()
