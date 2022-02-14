@@ -23,7 +23,8 @@ class Steam(commands.Cog,
 
     @commands.command(
         name='steamuser',
-        help="<community_id>"
+        help="<community_id>",
+        brief="Retrieve information on a Steam user."
     )
     async def get_steam_users(self, ctx, user_id:str):
         await ctx.channel.trigger_typing()
