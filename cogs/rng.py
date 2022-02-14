@@ -9,27 +9,24 @@ class RNG(commands.Cog):
     # Roll Command Value
     @commands.command(
         name="roll",
-        help="Used to get a random number between 1 and [value].",
-        brief=": Returns a random number between 1 and [value]."
+        help="$roll [value, ...]",
+        brief=": Return random item from list if more than one value is entered. Otherwise, returns a random number between 1 and [value]"
     )
-    async def roll(self, ctx, value):
-        # Check type of value and if it is list, get random from list
-        # if it is int, do below
-        print(type(value))
-        print(value)
-        await ctx.channel.send('I rolled a {:.0f}'.format(random.uniform(1, int(value))))
-    # Roll Command List
-    @commands.command(
-        help="Used to get a random value from a list seperated by commas.",
-        brief=": Returns a random value from [list], seperate values with a comma."
-    )
-    async def roll_list(self, ctx, lst):
-        pass
+    async def roll(self, ctx, *value):
+        # Choose random index from tuple is length greater than 1
+        if len(value) > 1:
+            await ctx.channel.send('{}'.format(value[int(random.uniform(0, len(value)))]))
+        # Choose random value between 1 and value[0] if length is 1
+        elif len(value) == 1:
+            await ctx.channel.send('I rolled a {:.0f}'.format(random.uniform(1, int(value[0]))))
+        # User entered wrong format
+        else:
+            await ctx.channel.send("Error")
 
     # Coin Flip Command
     @commands.command(
         name="flip",
-        help="",
+        help="$flip",
         brief=": Flips a coin and returns Heads or Tails"
     )
     async def flip(self, ctx):
@@ -38,7 +35,7 @@ class RNG(commands.Cog):
     # 8ball Command
     @commands.command(
         name="8ball",
-        help="",
+        help="$8ball [question]",
         brief=": Returns an answer from the magic 8 ball."
     )
     async def eight_ball(self, ctx, message):
