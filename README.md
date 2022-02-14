@@ -1,3 +1,1 @@
 # Commander_Bot
-
-# TESTING
