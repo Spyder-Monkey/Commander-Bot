@@ -1,3 +1,5 @@
 # Commander_Bot
 
-readme file testing
+A bot for running an assortment of commands on a Discord server.
+
+## Test Heading
