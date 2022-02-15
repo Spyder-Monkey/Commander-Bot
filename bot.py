@@ -7,10 +7,12 @@ import aiohttp
 from database import DbModel
 from datetime import datetime
 import threading
-
+# Load the API keys.
 load_dotenv('secrets.env')
+# Obtain the Discord API key.
 API_TOKEN = os.getenv('DISCORD_TOKEN')
 
+# tuple of cog files containing commands.
 extensions = (
     "cogs.poll",
     "cogs.strawpoll",
@@ -34,7 +36,7 @@ class CommanderBot(commands.AutoShardedBot):
         self.shard_count = self.config["shards"]["count"]
         shard_ids_list = []
         self.is_purify = False
-
+        # Removes the help command in order to create and use a custom help command.
         self.remove_command('help')
 
         for i in range(self.config["shards"]["first_shard_id"], self.config["shards"]["last_shard_id"]+1):
@@ -64,7 +66,7 @@ class CommanderBot(commands.AutoShardedBot):
         
         return (hour, minute, seconds)
 
-
+    # Logs the bot into the server.
     async def on_ready(self):
         print('Logging in...\t\t', end='')
         self.http_session = aiohttp.ClientSession()

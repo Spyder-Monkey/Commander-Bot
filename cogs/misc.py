@@ -30,7 +30,11 @@ class Misc(commands.Cog,
         
     # Command to get the amount of signatures on the Cyber Cafe petition
     # using web scraping
-    @commands.command(name="signatures")
+    @commands.command(
+        name="signatures",
+        help=u'\u200b',
+        brief="Get the signature count of the Cyber Cafe petition."
+    )
     async def get_signatures(self, ctx):
         URL = "https://www.change.org/p/bring-back-cyber-cafe"
 

@@ -27,7 +27,8 @@ class RNG(commands.Cog,
     # Coin Flip Command
     @commands.command(
         name="flip",
-        brief=": Flips a coin and returns Heads or Tails"
+        help=u'\u200b',
+        brief="Flips a coin and returns Heads or Tails"
     )
     async def flip(self, ctx):
         await ctx.channel.send(random.choice(["Heads", "Tails"]))
@@ -36,7 +37,7 @@ class RNG(commands.Cog,
     @commands.command(
         name="8ball",
         help="<question>",
-        brief=": Returns an answer from the magic 8 ball."
+        brief="Returns an answer from the magic 8 ball."
     )
     async def eight_ball(self, ctx, message):
         await ctx.channel.send(random.choice(open('txts/8ball.txt').read().splitlines()))

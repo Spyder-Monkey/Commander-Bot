@@ -7,7 +7,8 @@ import requests
 
 load_dotenv('secrets.env')
 
-class StrawPoll(commands.Cog):
+class StrawPoll(commands.Cog,
+                description="Creates a StrawPoll link for users to vote."):
     def __init__(self, bot):
         self.bot = bot
         self.api_key = os.getenv("STRAWPOLL_TOKEN")
@@ -33,7 +34,11 @@ class StrawPoll(commands.Cog):
         message=message[last+1:]
         return self.get_options(message, options)
 
-    @commands.command(name='strawpoll')
+    @commands.command(
+        name='strawpoll',
+        help='{question} [Answer1] [Answer2] ...',
+        brief="Create a Strawpoll link."
+    )
     @commands.cooldown(2,60,BucketType.user)
     async def strawpoll(self, ctx):
         if not ctx.message.author.bot:
