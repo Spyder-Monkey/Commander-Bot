@@ -7,27 +7,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import time
-from datetime import datetime
-import threading
+import random
+
+from emojis.uwuList import uwu
 
 class Misc(commands.Cog,
             description="Miscellaneous commands."):
     def __init__(self, bot):
         self.bot = bot
 
-
-    # checks the time every second... probably gonna remove this from here though
-    def check_time(self):
-        threading.Timer(1, self.check_time).start()
-        now = datetime.now()
-        print(now)
-
-        current_time = now.strftime("%H:%M:%S")
-        print("Current Time: ", current_time)
-
-        return now
-
-        
     # Command to get the amount of signatures on the Cyber Cafe petition
     # using web scraping
     @commands.command(
@@ -66,6 +54,37 @@ class Misc(commands.Cog,
         embed = discord.Embed(title="**"+banner+"**", description=sign_count)
         # JUST SEND IT BUD
         await ctx.send(embed=embed)
+
+    @commands.command(
+        name="uwu",
+        help="<message>",
+        brief="Converts a message to UwU speech."
+    )
+    async def uwuify(self, ctx):
+        uwu_rules_dict = {
+            'l': 'w',
+            'r': 'w',
+            'th': 'ff',
+            'ove': 'uv',
+            'osh': 'awsh',
+            '!': '! ' + uwu[int(random.uniform(0, len(uwu)))]
+        }
+        uwu_message = ""
+        
+        # UWU Rules needing to be implemented
+        # "N + <Vowel>" = "Ny + <Vowel>" (e.g. No = Nyo)
+
+
+        for word in ctx.message.content.split():
+            if word == "$uwu": continue
+            for key, value in uwu_rules_dict.items():
+                if word.find(key) > -1:
+                    word = word.replace(key, value)
+            uwu_message += word + " "
+        
+        uwu_message += uwu[int(random.uniform(0, len(uwu)))]
+
+        await ctx.channel.send(uwu_message)
 
 
 
