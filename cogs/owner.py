@@ -55,7 +55,7 @@ class Owner(commands.Cog):
 
     # Shutdown bot
     @commands.command(
-        name="shutdown", 
+        name="kill", 
         brief="Log the bot out.",
         hidden=True
     )
@@ -63,26 +63,39 @@ class Owner(commands.Cog):
     async def shutdown(self, ctx):
         await ctx.bot.logout()
 
-    # Set bot status to offline
     @commands.command(
-        name="sleep", 
-        brief="Sets the status of Commander Bot to offline.",
+        name="status",
+        help='<status>',
+        brief="Set the status of the Bot.",
         hidden=True
     )
     @commands.is_owner()
-    async def go_idle(self, ctx):
-        await self.bot.change_presence(status=discord.Status.offline)
+    async def set_status(self, ctx, new_status):
+        new_status = new_status.lower()
 
-    # Set bot status to online
-    @commands.command(
-        name="awake",
-        brief="Sets the status of Commander Bot to online",
-        hidden=True
-    )
-    @commands.is_owner()
-    async def awake(self, ctx):
-        await ctx.channel.send("It's tickle time!")
-        await self.bot.change_presence(status=discord.Status.online)
+        print("New Bot Status: ", end='')
+        match new_status:
+            case 'online':
+                self.bot.is_awake = True
+                await self.bot.change_presence(status=discord.Status.online)
+                await ctx.channel.send("IT'S TICKLE TIME!")
+            case 'offline':
+                self.bot.is_awake = False
+                await self.bot.change_presence(status=discord.Status.offline)
+            case 'idle':
+                self.bot.is_awake = False
+                await self.bot.change_presence(status=discord.Status.idle)
+            case 'invisible':
+                self.bot.is_awake = False
+                await self.bot.change_presence(status=discord.Status.invisible)
+            case 'dnd':
+                self.bot.is_awake = False
+                await self.bot.change_presence(status=discord.Status.dnd)
+            case _:
+                new_status = 'INVALID'
+                await ctx.channel.send("Not a valid status.")
+
+        print(new_status)
 
     # Drops all tables in database WILL BE REMOVED AFTER TESTING
     @commands.command(

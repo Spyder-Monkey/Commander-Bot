@@ -28,14 +28,17 @@ class CommanderBot(commands.AutoShardedBot):
     def __init__(self, config):
         prefix = "$"
         super().__init__(
-            command_prefix = prefix,
-            status = discord.Status.online,
-            activity = discord.Game(name="with your feelings")
+            command_prefix = prefix
+            #status = discord.Status.online,
+            #activity = discord.Game(name="with your feelings")
         )
         self.config = config
         self.shard_count = self.config["shards"]["count"]
         shard_ids_list = []
         self.is_purify = False
+        self.status = discord.Status.online
+        self.activity = discord.Game(name="with your feelings")
+        self.is_awake = True
         # Removes the help command in order to create and use a custom help command.
         self.remove_command('help')
 
@@ -79,8 +82,12 @@ class CommanderBot(commands.AutoShardedBot):
 
     # Triggered each time a message is sent in chat
     async def on_message(self, message):
-        if not message.author.bot:
-            await self.process_commands(message)
+        if self.is_awake:
+            if not message.author.bot:
+                await self.process_commands(message)
+        else:
+            if str(message.author) == 'Spyder#5038' and message.content.startswith("$status"):
+                await self.process_commands(message)
 
     # Triggered each time a user adds a reaction to a message
     async def on_raw_reaction_add(self, payload):

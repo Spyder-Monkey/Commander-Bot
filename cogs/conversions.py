@@ -131,7 +131,7 @@ class Conversions(commands.Cog,
         # values [10-36] = [a-z]
         # values [37-63] = [A-Z]
         # values [64-69] = [!, @, #, $, &]
-        ctx.channel.send("This command still needs to be implemented.")
+        await ctx.channel.send("This command still needs to be implemented.")
 
 def setup(bot):
     bot.add_cog(Conversions(bot))
